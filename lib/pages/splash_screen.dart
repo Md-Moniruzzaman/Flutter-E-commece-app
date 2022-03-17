@@ -34,19 +34,19 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const <Widget>[
+            children: <Widget>[
               Text(
                 'E - Commerce',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 45,
+                  fontSize: 45.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
-              CircularProgressIndicator(
+              const CircularProgressIndicator(
                 color: AppColors.white,
               ),
             ],
