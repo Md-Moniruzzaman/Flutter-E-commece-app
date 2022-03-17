@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:ecommerce_app/pages/login_screen.dart';
 import 'package:flutter/material.dart';
 import '/constant/appColors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
