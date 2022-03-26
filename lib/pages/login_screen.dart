@@ -2,6 +2,9 @@ import 'package:ecommerce_app/constant/appColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../widgets/custombutton.dart';
+import 'registration_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -60,7 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
                           height: 20.h,
@@ -136,6 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Expanded(
                               child: TextField(
                                 autofocus: false,
+                                obscureText: _obscureText,
                                 controller: _passwordController,
                                 decoration: InputDecoration(
                                   hintText: 'abcSD2546',
@@ -155,19 +160,68 @@ class _LoginScreenState extends State<LoginScreen> {
                                               _obscureText = false;
                                             });
                                           },
-                                          icon: Icon(Icons.remove_red_eye))
+                                          icon: Icon(
+                                            Icons.remove_red_eye,
+                                            size: 20.w,
+                                            color: AppColors.deepOrange,
+                                          ))
                                       : IconButton(
                                           onPressed: () {
                                             setState(() {
                                               _obscureText = true;
                                             });
                                           },
-                                          icon: Icon(Icons.visibility_off)),
+                                          icon: Icon(
+                                            Icons.visibility_off,
+                                            size: 20.w,
+                                            color: AppColors.deepOrange,
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),
                           ],
-                        )
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        customButton(
+                          'SignIn',
+                          () {},
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Wrap(
+                          children: [
+                            Text(
+                              "Don't have an account?",
+                              style: TextStyle(
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFFBBBBBB),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RegistrationPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                ' SignUp',
+                                style: TextStyle(
+                                  color: AppColors.deepOrange,
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
