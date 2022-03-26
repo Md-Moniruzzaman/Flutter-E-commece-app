@@ -16,6 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   var _obscureText = true;
+
+  signIn() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,7 +189,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         customButton(
                           'SignIn',
-                          () {},
+                          () {
+                            signIn();
+                          },
                         ),
                         SizedBox(
                           height: 20.h,
