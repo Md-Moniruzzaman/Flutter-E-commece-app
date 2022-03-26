@@ -1,8 +1,14 @@
+// ignore_for_file: avoid_print
+
 import 'package:ecommerce_app/constant/appColors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../widgets/custombutton.dart';
+import 'bottom_nav_controller.dart';
 import 'registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,9 +21,32 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  var _obscureText = true;
+  bool _obscureText = true;
 
-  signIn() {}
+  signIn() async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      var authCredential = userCredential.user;
+      print(authCredential!.uid);
+      if (authCredential.uid.isNotEmpty) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => BottomNavController()));
+      } else {
+        Fluttertoast.showToast(msg: 'Something is wrong!');
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        Fluttertoast.showToast(msg: 'No user found for that email!');
+      } else if (e.code == 'wrong-password') {
+        Fluttertoast.showToast(msg: 'Wrong password provided for that user.');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'Sign In',
                       style: TextStyle(
                         fontSize: 21.sp,
+                        fontWeight: FontWeight.bold,
                         color: AppColors.white,
                       ),
                     ),
