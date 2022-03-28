@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 Widget customButton(String buttonText, onPressed) {
   return SizedBox(
     height: 50.h,
-    width: 100.w,
+    width: 160.w,
     child: ElevatedButton(
       onPressed: onPressed,
       child: Text(

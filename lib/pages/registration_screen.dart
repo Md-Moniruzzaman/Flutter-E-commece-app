@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:ecommerce_app/pages/login_screen.dart';
+import 'package:ecommerce_app/pages/user_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -220,10 +221,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           height: 20.h,
                         ),
                         customButton(
-                          'Sign Up',
+                          'Continue',
                           () {
                             signUp();
-                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => UserForm()));
                           },
                         ),
                         SizedBox(
@@ -252,7 +254,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 ' SignIn',
                                 style: TextStyle(
                                   color: AppColors.deepOrange,
-                                  fontSize: 13.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
