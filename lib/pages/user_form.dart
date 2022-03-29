@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_app/pages/bottom_nav_controller.dart';
 import 'package:ecommerce_app/widgets/custombutton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../constant/appColors.dart';
 
@@ -21,7 +25,20 @@ class _UserFormState extends State<UserForm> {
   final TextEditingController _ageController = TextEditingController();
   List<String> gender = ["Male", "Female", "Other"];
 
-  _selectDateFromPicker() {}
+  Future<void> _selectDateFromPicker(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(DateTime.now().year - 20),
+      firstDate: DateTime(DateTime.now().year - 80),
+      lastDate: DateTime(DateTime.now().year + 20),
+    );
+    if (picked != null) {
+      setState(() {
+        _dobController.text =
+            '${picked.day} / ${picked.month} / ${picked.year}';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +82,7 @@ class _UserFormState extends State<UserForm> {
         if (!RegExp(r'^.{11,}$').hasMatch(value)) {
           return 'Please enter minimum 11 digits.';
         }
-        // return null;
+        return null;
       },
       onSaved: (value) {
         _nameController.text = value!;
@@ -90,12 +107,12 @@ class _UserFormState extends State<UserForm> {
       },
       readOnly: true,
       decoration: InputDecoration(
-        hintText: "date of birth",
-        suffixIcon: IconButton(
-          onPressed: () => _selectDateFromPicker(),
-          icon: Icon(Icons.calendar_today_outlined),
-        ),
-      ),
+          hintText: "date of birth",
+          suffixIcon: IconButton(
+            onPressed: () => _selectDateFromPicker(context),
+            icon: const Icon(Icons.calendar_today_outlined),
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
     // Gender selection Field
@@ -194,6 +211,10 @@ class _UserFormState extends State<UserForm> {
                 SizedBox(
                   height: 10.h,
                 ),
+                dobField,
+                SizedBox(
+                  height: 10.h,
+                ),
                 genderSelection,
                 SizedBox(
                   height: 10.h,
@@ -202,12 +223,35 @@ class _UserFormState extends State<UserForm> {
                 SizedBox(
                   height: 36.h,
                 ),
-                customButton("Submit", () {}),
+                customButton("Submit", () => sendDataToDB()),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  sendDataToDB() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final _currentUsers = _auth.currentUser;
+
+    CollectionReference userReference =
+        FirebaseFirestore.instance.collection('users');
+    if (_formkey.currentState!.validate()) {
+      userReference.doc(_currentUsers!.email).set({
+        'name': _nameController.text,
+        'phoneNumber': _phoneNumberController.text,
+        'dob': _dobController.text,
+        'gender': _genderController.text,
+        'age': _ageController.text,
+      }).then((value) {
+        Fluttertoast.showToast(msg: 'Data updated successful');
+        Navigator.push(context,
+                MaterialPageRoute(builder: (_) => BottomNavController()))
+            .catchError(
+                (e) => Fluttertoast.showToast(msg: 'Something went wrong!'));
+      });
+    }
   }
 }

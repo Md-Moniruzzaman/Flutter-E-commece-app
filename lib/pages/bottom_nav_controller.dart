@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/constant/appColors.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavController extends StatefulWidget {
@@ -10,6 +11,8 @@ class BottomNavController extends StatefulWidget {
 class _BottomNavControllerState extends State<BottomNavController> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: AppColors.deepOrange,
+    );
   }
 }
