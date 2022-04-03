@@ -11,16 +11,27 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Container(
         child: Column(
           children: [
-            TextFormField(
-              controller: _searchController,
-              decoration: InputDecoration(fillColor: Colors.red),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  fillColor: Colors.red,
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.blue)),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.grey)),
+                  hintText: 'Search here...',
+                ),
+              ),
             )
           ],
         ),
-      )),
+      ),
     );
   }
 }
