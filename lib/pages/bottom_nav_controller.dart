@@ -55,10 +55,7 @@ class _BottomNavControllerState extends State<BottomNavController> {
           });
         },
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: _pages[_currrentIndex],
-      ),
+      body: _pages[_currrentIndex],
     );
   }
 }
