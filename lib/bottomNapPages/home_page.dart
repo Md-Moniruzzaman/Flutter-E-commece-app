@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:ecommerce_app/constant/appColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -84,9 +85,9 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               AspectRatio(
                 aspectRatio: 1.5,
                 child: CarouselSlider(
@@ -115,6 +116,15 @@ class _HomeState extends State<Home> {
                       }),
                 ),
               ),
+              DotsIndicator(
+                dotsCount: _carouselImages.isEmpty ? 1 : _carouselImages.length,
+                position: _dotposition.toDouble(),
+                decorator: const DotsDecorator(
+                    activeColor: AppColors.deepOrange,
+                    color: Colors.grey,
+                    size: Size(10, 10),
+                    activeSize: Size(12, 12)),
+              )
             ],
           ),
         ),
