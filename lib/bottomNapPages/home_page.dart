@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
               //   height: 10,
               // ),
               AspectRatio(
-                aspectRatio: 1.5,
+                aspectRatio: 2.5,
                 child: CarouselSlider(
                   items: _carouselImages
                       .map(
