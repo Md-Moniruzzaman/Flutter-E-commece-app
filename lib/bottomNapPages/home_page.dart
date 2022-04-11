@@ -15,6 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final TextEditingController _searchController = TextEditingController();
   final List<String> _carouselImages = [];
+  final List _productslist = [];
   var _dotposition = 0;
 
   fetchCarouselImg() async {
@@ -23,7 +24,25 @@ class _HomeState extends State<Home> {
     setState(() {
       for (int i = 0; i < qn.docs.length; i++) {
         _carouselImages.add(qn.docs[i]['img_path']);
-        print(qn.docs[i]['img_path']);
+        // print(qn.docs[i]['img_path']);
+      }
+      // return qn.docs;
+    });
+  }
+
+  // Fetching Products from firebase
+  fetchProducs() async {
+    QuerySnapshot qn =
+        await FirebaseFirestore.instance.collection('products').get();
+    setState(() {
+      for (int i = 0; i < qn.docs.length; i++) {
+        _productslist.add({
+          "products_name": qn.docs[i]['products_name'],
+          "products_description": qn.docs[i]['products_description'],
+          "products_price": qn.docs[i]['products_price'],
+          "products_img": qn.docs[i]['products_img'],
+        });
+        // print(qn.docs[i]['img_path']);
       }
       // return qn.docs;
     });
@@ -32,6 +51,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     fetchCarouselImg();
+    fetchProducs();
     super.initState();
   }
 
@@ -124,7 +144,129 @@ class _HomeState extends State<Home> {
                     color: Colors.grey,
                     size: Size(10, 10),
                     activeSize: Size(12, 12)),
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Products',
+                        style: TextStyle(
+                          color: AppColors.deepOrange,
+                          fontSize: 18,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: const Text(
+                          'View All >',
+                          style: TextStyle(
+                            color: AppColors.deepOrange,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 180,
+                child: GridView.builder(
+                  itemCount: _productslist.length,
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1, childAspectRatio: 1),
+                  itemBuilder: (_, index) {
+                    return GestureDetector(
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: Card(
+                          elevation: 3,
+                          color: Colors.white,
+                          child: AspectRatio(
+                            aspectRatio: 1.5,
+                            child: Column(children: [
+                              Image.network(
+                                  _productslist[index]['products_img'][0],
+                                  fit: BoxFit.cover),
+                              Text(
+                                  'Price: ${_productslist[index]['products_name']}'),
+                              Text(
+                                  'Price: ${_productslist[index]['products_price']}'),
+                            ]),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Products',
+                        style: TextStyle(
+                          color: AppColors.deepOrange,
+                          fontSize: 18,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: const Text(
+                          'View All >',
+                          style: TextStyle(
+                            color: AppColors.deepOrange,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 180,
+                child: GridView.builder(
+                  itemCount: _productslist.length,
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1, childAspectRatio: 1),
+                  itemBuilder: (_, index) {
+                    return GestureDetector(
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: Card(
+                          elevation: 3,
+                          color: Colors.white,
+                          child: AspectRatio(
+                            aspectRatio: 3.5,
+                            child: Column(children: [
+                              Image.network(
+                                  _productslist[index]['products_img'][0],
+                                  fit: BoxFit.cover),
+                              Text(
+                                  'Price: ${_productslist[index]['products_name']}'),
+                              Text(
+                                  'Price: ${_productslist[index]['products_price']}'),
+                            ]),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
