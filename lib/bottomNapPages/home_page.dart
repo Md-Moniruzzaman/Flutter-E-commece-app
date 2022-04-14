@@ -17,6 +17,7 @@ class _HomeState extends State<Home> {
   final List<String> _carouselImages = [];
   final List _productslist = [];
   var _dotposition = 0;
+  var inputText = '';
 
   fetchCarouselImg() async {
     QuerySnapshot qn =
@@ -85,6 +86,12 @@ class _HomeState extends State<Home> {
                                 borderSide: BorderSide(color: Colors.grey)),
                             hintText: 'Search here...',
                           ),
+                          onChanged: (val) {
+                            setState(() {
+                              inputText = val;
+                              print(inputText);
+                            });
+                          },
                         ),
                       ),
                     ),
