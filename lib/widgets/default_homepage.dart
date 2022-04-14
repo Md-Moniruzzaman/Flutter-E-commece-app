@@ -58,168 +58,161 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          AspectRatio(
-            aspectRatio: 2.5,
-            child: CarouselSlider(
-              items: carouselImages
-                  .map(
-                    (item) => Padding(
-                      padding: const EdgeInsets.all(7),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(item),
-                                fit: BoxFit.fitWidth)),
-                      ),
+    return Column(
+      children: [
+        AspectRatio(
+          aspectRatio: 2.5,
+          child: CarouselSlider(
+            items: carouselImages
+                .map(
+                  (item) => Padding(
+                    padding: const EdgeInsets.all(7),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(item), fit: BoxFit.fitWidth)),
                     ),
-                  )
-                  .toList(),
-              options: CarouselOptions(
-                  autoPlay: false,
-                  viewportFraction: 0.8,
-                  enlargeCenterPage: true,
-                  enlargeStrategy: CenterPageEnlargeStrategy.height,
-                  onPageChanged: (val, carouselPageChangeReason) {
-                    setState(() {
-                      dotposition = val;
-                    });
-                  }),
-            ),
+                  ),
+                )
+                .toList(),
+            options: CarouselOptions(
+                autoPlay: false,
+                viewportFraction: 0.8,
+                enlargeCenterPage: true,
+                enlargeStrategy: CenterPageEnlargeStrategy.height,
+                onPageChanged: (val, carouselPageChangeReason) {
+                  setState(() {
+                    dotposition = val;
+                  });
+                }),
           ),
-          DotsIndicator(
-            dotsCount: carouselImages.isEmpty ? 1 : carouselImages.length,
-            position: dotposition.toDouble(),
-            decorator: const DotsDecorator(
-                activeColor: AppColors.deepOrange,
-                color: Colors.grey,
-                size: Size(10, 10),
-                activeSize: Size(12, 12)),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Products',
+        ),
+        DotsIndicator(
+          dotsCount: carouselImages.isEmpty ? 1 : carouselImages.length,
+          position: dotposition.toDouble(),
+          decorator: const DotsDecorator(
+              activeColor: AppColors.deepOrange,
+              color: Colors.grey,
+              size: Size(10, 10),
+              activeSize: Size(12, 12)),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Products',
+                  style: TextStyle(
+                    color: AppColors.deepOrange,
+                    fontSize: 18,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: const Text(
+                    'View All >',
                     style: TextStyle(
                       color: AppColors.deepOrange,
                       fontSize: 18,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Text(
-                      'View All >',
-                      style: TextStyle(
-                        color: AppColors.deepOrange,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          SizedBox(
-            height: 180,
-            child: GridView.builder(
-              itemCount: productslist.length,
-              scrollDirection: Axis.horizontal,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1, childAspectRatio: 1),
-              itemBuilder: (_, index) {
-                return GestureDetector(
+        ),
+        SizedBox(
+          height: 180,
+          child: GridView.builder(
+            itemCount: productslist.length,
+            scrollDirection: Axis.horizontal,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1, childAspectRatio: 1),
+            itemBuilder: (_, index) {
+              return GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Card(
+                    elevation: 3,
+                    color: Colors.white,
+                    child: AspectRatio(
+                      aspectRatio: 1.5,
+                      child: Column(children: [
+                        Image.network(productslist[index]['products_img'][0],
+                            fit: BoxFit.cover),
+                        Text('Price: ${productslist[index]['products_name']}'),
+                        Text('Price: ${productslist[index]['products_price']}'),
+                      ]),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Products',
+                  style: TextStyle(
+                    color: AppColors.deepOrange,
+                    fontSize: 18,
+                  ),
+                ),
+                GestureDetector(
                   onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Card(
-                      elevation: 3,
-                      color: Colors.white,
-                      child: AspectRatio(
-                        aspectRatio: 1.5,
-                        child: Column(children: [
-                          Image.network(productslist[index]['products_img'][0],
-                              fit: BoxFit.cover),
-                          Text(
-                              'Price: ${productslist[index]['products_name']}'),
-                          Text(
-                              'Price: ${productslist[index]['products_price']}'),
-                        ]),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Products',
+                  child: const Text(
+                    'View All >',
                     style: TextStyle(
                       color: AppColors.deepOrange,
                       fontSize: 18,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Text(
-                      'View All >',
-                      style: TextStyle(
-                        color: AppColors.deepOrange,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          SizedBox(
-            height: 180,
-            child: GridView.builder(
-              itemCount: productslist.length,
-              scrollDirection: Axis.horizontal,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1, childAspectRatio: 1),
-              itemBuilder: (_, index) {
-                return GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Card(
-                      elevation: 3,
-                      color: Colors.white,
-                      child: AspectRatio(
-                        aspectRatio: 3.5,
-                        child: Column(children: [
-                          Image.network(productslist[index]['products_img'][0],
-                              fit: BoxFit.cover),
-                          Text(
-                              'Price: ${productslist[index]['products_name']}'),
-                          Text(
-                              'Price: ${productslist[index]['products_price']}'),
-                        ]),
-                      ),
+        ),
+        SizedBox(
+          height: 180,
+          child: GridView.builder(
+            itemCount: productslist.length,
+            scrollDirection: Axis.horizontal,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1, childAspectRatio: 1),
+            itemBuilder: (_, index) {
+              return GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Card(
+                    elevation: 3,
+                    color: Colors.white,
+                    child: AspectRatio(
+                      aspectRatio: 3.5,
+                      child: Column(children: [
+                        Image.network(productslist[index]['products_img'][0],
+                            fit: BoxFit.cover),
+                        Text('Price: ${productslist[index]['products_name']}'),
+                        Text('Price: ${productslist[index]['products_price']}'),
+                      ]),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
