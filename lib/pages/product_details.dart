@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:ecommerce_app/constant/appColors.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductDetails extends StatefulWidget {
   final _product;
+  // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
   ProductDetails(this._product);
 
   @override
@@ -57,35 +60,32 @@ class _ProductDetailsState extends State<ProductDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: AspectRatio(
-                    aspectRatio: 2.5,
-                    child: CarouselSlider(
-                      items: widget._product['products_img']
-                          .map<Widget>(
-                            (item) => Padding(
-                              padding: const EdgeInsets.all(7),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(item),
-                                        fit: BoxFit.fitWidth)),
-                              ),
+                AspectRatio(
+                  aspectRatio: 2.5,
+                  child: CarouselSlider(
+                    items: widget._product['products_img']
+                        .map<Widget>(
+                          (item) => Padding(
+                            padding: const EdgeInsets.all(7),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(item),
+                                      fit: BoxFit.fitWidth)),
                             ),
-                          )
-                          .toList(),
-                      options: CarouselOptions(
-                          autoPlay: false,
-                          viewportFraction: 0.8,
-                          enlargeCenterPage: true,
-                          enlargeStrategy: CenterPageEnlargeStrategy.height,
-                          onPageChanged: (val, carouselPageChangeReason) {
-                            setState(() {
-                              dotposition = val;
-                            });
-                          }),
-                    ),
+                          ),
+                        )
+                        .toList(),
+                    options: CarouselOptions(
+                        autoPlay: false,
+                        viewportFraction: 0.8,
+                        enlargeCenterPage: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.height,
+                        onPageChanged: (val, carouselPageChangeReason) {
+                          setState(() {
+                            dotposition = val;
+                          });
+                        }),
                   ),
                 ),
                 Center(
@@ -100,26 +100,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                         activeSize: Size(12, 12)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 Text(
                   'Product Name: ${widget._product["products_name"]}',
-                  style: TextStyle(fontSize: 18, color: AppColors.deepOrange),
+                  style: const TextStyle(
+                      fontSize: 18, color: AppColors.deepOrange),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 Text(
                   'Product Price: ${widget._product["products_price"]}',
-                  style: TextStyle(fontSize: 18, color: AppColors.deepOrange),
+                  style: const TextStyle(
+                      fontSize: 18, color: AppColors.deepOrange),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 Text(
                   'Product Description: ${widget._product["products_description"]}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),
