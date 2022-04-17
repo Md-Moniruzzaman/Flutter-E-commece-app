@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:ecommerce_app/pages/product_details.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/appColors.dart';
@@ -133,7 +134,10 @@ class _DefaultHomeScreenState extends State<DefaultHomeScreen> {
                 crossAxisCount: 1, childAspectRatio: 1),
             itemBuilder: (_, index) {
               return GestureDetector(
-                onTap: () {},
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProductDetails((productslist[index])))),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Card(
