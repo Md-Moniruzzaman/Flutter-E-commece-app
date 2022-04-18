@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_app/constant/appColors.dart';
 import 'package:ecommerce_app/widgets/custombutton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,14 @@ class _ProfileState extends State<Profile> {
   setsdataToTextField(data) {
     return Column(
       children: [
+        SizedBox(
+          height: 100.h,
+          child: Center(
+              child: Text(
+            'User Account\n         Edit',
+            style: TextStyle(fontSize: 21.sp, color: AppColors.deepOrange),
+          )),
+        ),
         TextFormField(
           controller: _nameController =
               TextEditingController(text: data['name']),
@@ -54,7 +63,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(15.0),
           child: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection('users')
