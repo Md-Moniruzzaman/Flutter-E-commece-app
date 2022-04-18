@@ -6,8 +6,27 @@ class Favorite extends StatefulWidget {
 }
 
 class _FavoriteState extends State<Favorite> {
+  TextEditingController? _nameController;
+  TextEditingController? _phoneController;
+  TextEditingController? _genderController;
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            TextFormField(
+              controller: _nameController,
+            ),
+            TextFormField(
+              controller: _phoneController,
+            ),
+            TextFormField(
+              controller: _genderController,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
