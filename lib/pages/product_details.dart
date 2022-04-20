@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:ecommerce_app/constant/appColors.dart';
 import 'package:ecommerce_app/widgets/custombutton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -128,16 +130,29 @@ class _ProductDetailsState extends State<ProductDetails> {
                 SizedBox(
                   height: 100.h,
                 ),
-                Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: customButton('Add To Card', () => null),
-                ))
+                Center(child: customButton('Add To Cart', () => addToCart()))
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future addToCart() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    final currentUser = _auth.currentUser;
+    CollectionReference _itemProductReference =
+        FirebaseFirestore.instance.collection('cart_item_product');
+
+    return _itemProductReference
+        .doc(currentUser!.email)
+        .collection('items')
+        .doc()
+        .set({
+      'products_name': widget._product['products_name'],
+      'products_price': widget._product['products_price'],
+      'products_img': widget._product['products_img'],
+    }).then((_) => print('Product added successful'));
   }
 }
